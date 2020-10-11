@@ -1,14 +1,17 @@
-FROM ruby:2.7.1-alpine3.11
+FROM ruby:2.7.2
 
 MAINTAINER Michael Karlesky <michael@karlesky.net>
 
 
-RUN apk --no-cache add \
+RUN apt-get update; \
+  apt-get install -y --no-install-recommends \
   coreutils \
   gcc \
+  gcc-multilib \
   gcovr \
   valgrind \
-  libc-dev
+  libc-dev \
+  ;
 
 ##
 ## Copy assets for inclusion in image
@@ -50,4 +53,4 @@ ENV PATH "/project:$PATH"
 WORKDIR /project
 
 # When the container launches, run a shell that launches in WORKDIR
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]
